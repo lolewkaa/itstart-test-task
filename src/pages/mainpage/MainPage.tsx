@@ -21,6 +21,7 @@ const MainPage = () => {
 
   useEffect(() => {
     setIsPreloaderActive(true);
+    //имитация процесса загрузки данных
     const timer = setTimeout(async () => {
       try {
         const repos = await fetchSeminarsRepos();
@@ -40,7 +41,9 @@ const MainPage = () => {
   }, []);
 
   const handleDeleteSeminar = (item: SeminarType) => {
+    //удаляем объект из стора
     dispatch(deleteSeminar(item.id));
+    //удаляем объект с сервера
     deleteSeminarRepo(item.id);
     setOpenPopupDelete(false);
   };

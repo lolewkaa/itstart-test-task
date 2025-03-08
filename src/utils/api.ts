@@ -1,13 +1,14 @@
 import axios from "axios";
 import { SeminarType } from "../types/types";
 
+//получаем данные
 export const fetchSeminarsRepos = async (): Promise<SeminarType[]> => {
-  // const url = `http://localhost:3000/seminars`;
-  const url = `https://lolewkaa.github.io/itstart-test-task/db.json`
+  const url = `http://localhost:3000/seminars`;
   const response = await axios.get(url)
-  return response.data.seminars;
+  return response.data;
 };
 
+//удаляем данные
 export const deleteSeminarRepo = async (seminarId: string | number): Promise<void> => {
     const url = `http://localhost:3000/seminars/${seminarId}`;
     
@@ -18,6 +19,7 @@ export const deleteSeminarRepo = async (seminarId: string | number): Promise<voi
     }
   };
 
+  //обновляем данные
   export const updateSeminarRepo = async (seminarId: string | number, updatedData: object): Promise<void> => {
     const url = `http://localhost:3000/seminars/${seminarId}`;
 

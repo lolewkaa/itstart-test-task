@@ -6,6 +6,7 @@ import classes from "./style.module.css";
 import { useAppDispatch } from "../../hooks/ReduxHooks";
 import { editSeminar } from "../../store/slices/seminarsSlice";
 import { updateSeminarRepo } from "../../utils/api";
+import { formatDate } from "../../utils/formatDate";
 
 type PropsForm = {
     seminar: SeminarType;
@@ -15,10 +16,8 @@ type PropsForm = {
 
 const Form: React.FC<PropsForm> = ({seminar, setOpenPopupEdit}) => {
   const dispatch = useAppDispatch();
-  const formatDate = (dateString: string) => {
-    const [day, month, year] = dateString.split('.');
-    return `${year}-${month}-${day}`; 
-  };
+
+  //меняем формат даты для отображения в инпуте
   const [newSeminar, setNewSeminar] = useState({
     ...seminar,
     date: formatDate(seminar.date || ''), 
@@ -31,8 +30,10 @@ const Form: React.FC<PropsForm> = ({seminar, setOpenPopupEdit}) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //заменяем данные в сторе
     dispatch(editSeminar(newSeminar))
     setOpenPopupEdit(false)
+    //заменяем данные на сервере
     updateSeminarRepo(newSeminar.id, newSeminar)
 };
   return (
